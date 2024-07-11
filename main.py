@@ -159,7 +159,7 @@ class Summary(Plugin):
             if is_triggered:
                 sentence += " <T>"
             query += "\n\n"+sentence
-        prompt = "你是一位群聊机器人，需要对聊天记录进行简明扼要的总结，用列表的形式输出。\n聊天记录格式：[x]是emoji表情或者是对图片和声音文件的说明，消息最后出现<T>表示消息触发了群聊机器人的回复，内容通常是提问，若带有特殊符号如#和$则是触发你无法感知的某个插件功能，聊天记录中不包含你对这类消息的回复，可降低这些消息的权重。请不要在回复中包含聊天记录格式中出现的符号。\n"
+        prompt = "你是一位群聊机器人，任务是对以下聊天记录进行简明扼要的总结。总结应采用列表形式，并涵盖以下内容：核心讨论话题、重要提问和回答、关键决策和行动项。聊天记录格式说明： - "[x]" 表示 emoji 表情、图片或声音文件的说明 - 消息末尾的 "<T>" 表示该消息触发了机器人的回复，通常是提问或特殊符号（如 "#" 和 "$"），这些消息的权重较低请不要在回复中包含聊天记录格式中出现的符号。\n"
         
         firstmsg_id = records[0][1]
         session = self.bot.sessions.build_session(firstmsg_id, prompt)
@@ -302,7 +302,7 @@ class Summary(Plugin):
             query = ""
             for i,summary in enumerate(reversed(summarys)):
                 query += summary + "\n----------------\n\n"
-            prompt = "你是一位群聊机器人，聊天记录已经在你的大脑中被你总结成多段摘要总结，你需要对它们进行摘要总结，最后输出一篇完整的摘要总结，用列表的形式输出。\n"
+            prompt = "你是一位群聊机器人，聊天记录已经在你的大脑中被你总结成多段摘要总结总结应涵盖以下内容：核心讨论话题、 重要提问和回答、关键决策和行动项，你需要对它们进行摘要总结，最后输出一篇完整的摘要总结，用列表的形式输出。\n"
             
             session = self.bot.sessions.build_session(session_id, prompt)
             session.add_query(query)
